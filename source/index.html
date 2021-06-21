@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration Form</title>
+</head>
+<script>
+
+    const languageMonikerPairs = {
+        "CS": "C#",
+        "VB": "VB.NET",
+        "TS": "TypeScript",
+        "JS": "JavaScript",
+        "RS": "Rust",
+        "CPP": "C++",
+    }
+
+    const genders = ["Male", "Female", "Non-binary", "Prefer not to answer"];
+
+    const myFavoriteLanguageMonikers = ["CS", "TS"];
+
+    function onLoad() {
+        populateProgrammingLanguages();
+        populateGenders();
+    }
+
+    function onFavoriteLanguageChanged() {
+        const selectElement = document.getElementById("favoriteLanguageSelect");
+        const messageArea = document.getElementById("messageArea");
+        const languageMoniker = selectElement.value;
+
+        //Check if selected language is among my favorite languages;
+        if (myFavoriteLanguageMonikers.indexOf(languageMoniker) != -1) {
+            var languageName = languageMonikerPairs[languageMoniker];
+            messageArea.innerText = "I love " + languageName + " too!";
+        } else {
+            messageArea.innerText = "";
+        }
+
+        //Set programming language image logo;
+        const languageLogo = document.getElementById("programmingLanguageLogo");
+        if (languageMoniker == "") {
+            languageLogo.style = "display : none;";
+        } else {
+            languageLogo.style = "";
+            languageLogo.src = "./images/" + languageMoniker + ".png";
+        }
+    }
+
+    function populateProgrammingLanguages() {
+        const selectElement = document.getElementById("favoriteLanguageSelect");
+        for (var kvp in languageMonikerPairs) {
+            var option = document.createElement("option");
+            option.value = kvp;
+            option.innerText = languageMonikerPairs[kvp];
+            selectElement.appendChild(option);
+        }
+    }
+
+    function populateGenders() {
+        var inputGroup = document.getElementById("genderRadioInputs");
+        const name = "gendersGroup";
+        genders.forEach(gender => appendGenderToGenderGroup(inputGroup, gender));
+    }
+
+    function appendGenderToGenderGroup(group, gender) {
+        var input = document.createElement("input");
+        var label = document.createElement("label");
+
+        input.type = "radio";
+        input.id = gender + "radioInput";
+        input.name = name;
+        label.innerText = gender;
+        label.htmlFor = input.id;
+
+        group.appendChild(input);
+        group.appendChild(label);
+    }
+</script>
+
+<style>
+    div.inputGroup {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body onload="onLoad();">
+    <div>
+        <h1>Registration Form</h1>
+    </div>
+    <form action="./index.html">
+        <div>
+            <div class="inputGroup">
+                <label for="firstNameInput">First Name</label>
+                <input id="firstNameInput" type="text">
+            </div>
+
+            <div class="inputGroup">
+                <label for="lastNameInput">Last Name</label>
+                <input id="lastNameInput" type="text">
+            </div>
+
+            <div class="inputGroup">
+                <label for="emailAddressInput">Email Address</label>
+                <input id="emailAddressInput" type="email">
+            </div>
+
+            <div class="inputGroup">
+                <label for="passwordInput">Password</label>
+                <input id="passwordInput" type="password">
+            </div>
+
+            <div class="inputGroup">
+                <label for="confirmPasswordInput">Confirm Password</label>
+                <input id="confirmPasswordInput" type="password">
+            </div>
+
+            <div class="inputGroup">
+                <label for="birthdayInput">Birthday</label>
+                <input id="birthdayInput" type="date">
+            </div>
+        </div>
+
+        <div id="genderRadioInputs" class="inputGroup">
+            <p>Gender</p>
+            <!--Options are loaded with JavaScript-->
+        </div>
+
+        <div class="inputGroup">
+            <p>A short description about myself</p>
+            <textarea id="descriptionTextArea" placeholder="type here..."></textarea>
+        </div>
+
+        <div class="inputGroup">
+            <p>Favorite programming language</p>
+            <select id="favoriteLanguageSelect" onchange="onFavoriteLanguageChanged();">
+                <option value="" selected="selected">Please choose an option</option>
+                <!--Remaining options are loaded with JavaScript-->
+            </select>
+            <figure>
+                <p id="messageArea"></p>
+                <!--Image is initially hidden, as it does not start out with a source.-->
+                <img height="64" width="64" style="display : none;" id="programmingLanguageLogo">
+            </figure>
+        </div>
+
+        <div class="inputGroup">
+            <label for="receiveEmailsCheckbox">Receive periodic emails?</label>
+            <input id="receiveEmailsCheckbox" type="checkbox">
+        </div>
+
+        <button type="submit">Submit</button>
+
+    </form>
+</body>
+
+</html>
