@@ -15,13 +15,58 @@
         "CPP": "C++",
     }
 
+    /*
+    //Couldn't quite get this to work - always undefined
+    class textInput {
+        textInput(id, labelText, inputType) {
+            this.id = id;
+            this.labelText = labelText;
+            this.inputType = inputType;
+        }
+    }
+
+    var textInputs = [];
+
+    function populateTextGroups(){
+        textInputs.push(new textInput("firstName", "First Name", "text"));
+        textInputs.push(new textInput("lastName", "Last Name", "text"));
+        textInputs.push(new textInput("emailAddress", "Email Address", "email"));
+        textInputs.push(new textInput("password", "Password", "password"));
+        textInputs.push(new textInput("confirmPassword", "Confirm Password", "password"));
+        textInputs.push(new textInput("birthDay", "Birthday", "date"));
+    }
+
+    function populateInputGroups(){
+        const inputGroupsElement = document.getElementById("inputGroups");
+        textInputs.forEach(textInput => 
+        {
+            var inputGroup = document.createElement("div");
+            inputGroup.className = "inputGroup";
+
+            var input = document.createElement("input");
+            input.id = textInput.id;
+            input.type = textInput.inputType;
+
+            var label = document.createElement("label");
+            label.htmlFor = textInput.id;
+
+            inputGroup.appendChild(label);
+            inputGroup.appendChild(input);
+            inputGroupsElement.appendChild(inputGroup);
+        });
+    }
+    
+    */
+
     const genders = ["Male", "Female", "Non-binary", "Prefer not to answer"];
 
     const myFavoriteLanguageMonikers = ["CS", "TS"];
 
     function onLoad() {
-        populateProgrammingLanguages();
+        //populateTextGroups();
+        //populateInputGroups();
         populateGenders();
+        populateProgrammingLanguages();
     }
 
     function onFavoriteLanguageChanged() {
@@ -60,10 +105,10 @@
     function populateGenders() {
         var inputGroup = document.getElementById("genderRadioInputs");
         const name = "gendersGroup";
-        genders.forEach(gender => appendGenderToGenderGroup(inputGroup, gender));
+        genders.forEach(gender => appendGenderToGenderGroup(inputGroup, gender, name));
     }
 
-    function appendGenderToGenderGroup(group, gender) {
+    function appendGenderToGenderGroup(group, gender, name) {
         var input = document.createElement("input");
         var label = document.createElement("label");
 
@@ -90,7 +135,7 @@
         <h1>Registration Form</h1>
     </div>
     <form action="./index.html">
-        <div>
+        <div id="inputGroups">
             <div class="inputGroup">
                 <label for="firstNameInput">First Name</label>
                 <input id="firstNameInput" type="text">
